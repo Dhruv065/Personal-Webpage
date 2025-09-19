@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thesis: Gravothermal SIDM Simulations</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 900px; margin: auto; padding: 20px; line-height: 1.6; background: #fafafa; }
+    h1, h2 { color: #2c3e50; }
+    h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+    img, video { display: block; margin: 20px auto; max-width: 100%; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    a { color: #007acc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .note { font-size: 0.9em; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Gravothermal Evolution of Self-Interacting Dark Matter (SIDM) Halos</h1>
+
+  <h2>Why study halo structure?</h2>
+  <p>
+  Dark matter (DM) is a cornerstone of modern cosmology, making up about 85% of the matter in the universe. The leading candidate, cold dark matter (CDM), successfully explains large-scale structure formation. However, the nature of dark matter remains unknown, and alternative models like self-interacting dark matter (SIDM) have been proposed to address small-scale structure issues.
+  While the collisionless CDM model matches large-scale structure extremely well, a number of small-scale tensions have historically motivated either improved baryonic modelling or alternative dark-matter physics. Important examples (and their short explanations) are:
+  <ul>
+    <li><strong>Core–cusp problem</strong> — CDM N-body simulations predict steep, centrally-divergent density profiles (e.g., NFW), while some dwarf and low-surface-brightness galaxies appear to have shallower constant-density cores. This motivated early interest in self-interacting dark matter. </li>
+    <li><strong>Missing satellites problem</strong> — CDM predicts many more low-mass subhalos around Milky-Way-like hosts than the number of observed dwarf galaxies. Improved understanding of baryonic feedback and reionization has reduced this tension, but the counts of luminous satellites still place constraints on galaxy formation and dark-matter models.</li>
+    <li><strong>Too-Big-To-Fail (TBTF)</strong> — The most massive subhalos in CDM simulations appear too dense to host the known Milky Way satellites (they are “too big to fail” at forming stars), implying a mismatch between predicted subhalo internal structure and observed satellites unless baryonic processes reduce central densities. Papers and followups debated whether baryonic feedback and selection effects can resolve this. The uploaded paper reviews how self-interactions provide an alternate route to reduce central densities.</li>
+    <li><strong>Diversity problem</strong> — Observed rotation curves of galaxies with similar halo mass show a surprisingly large diversity of inner slopes and amplitudes, larger than naive CDM predictions. This suggests either complex baryonic effects or additional dark-matter physics (e.g., velocity-dependent self-interactions).</li>
+  </ul>
+  </p>
+
+  <h2>The reference study</h2>
+  <p>
+    My thesis builds upon the analysis in 
+    <a href="Weak_lensing_paper.pdf" target="_blank">Adhikari et al. (2024)</a>, 
+    which combined <strong>weak lensing measurements</strong> of galaxy clusters
+    from the Dark Energy Survey with simulations of SIDM. 
+  </p>
+  <p>
+    In that work:
+    <ul>
+      <li>Cluster halos with masses <em>≥ 10<sup>14</sup> M⊙</em> were studied.</li>
+      <li>Weak lensing of ~1000 clusters from the Dark Energy Survey (DES) provided high-quality data on the average
+          halo density profile.</li>
+      <li>These measurements were compared with 
+          <strong>cosmological N-body simulations</strong> (elastic SIDM) and 
+          <strong>gravothermal fluid simulations</strong> (dissipative SIDM).</li>
+      <li>The study placed strong constraints on SIDM cross-sections,
+          ruling out many models where halos would evolve too quickly into collapse.</li>
+    </ul>
+  </p>
+
+  <h2>What are gravothermal simulations?</h2>
+  <p>
+    Gravothermal simulations track how a halo evolves once dark matter self-interactions
+    allow particles to exchange energy. This exchange energy is dictated by fluid dynamics. Heat flows from the hotter outer regions toward
+    the cooler center, initially creating a core. Over time, however, energy continues to
+    drain from the inner region, eventually triggering <strong>core collapse</strong>. 
+  </p>
+  <p>
+    These simulations, originally developed for globular clusters, provide a computationally
+    efficient way to evolve thousands of halos over cosmic time. They complement 
+    full N-body simulations, which are more expensive, and allow us to study dissipative
+    scenarios where dark matter can lose energy through radiation of hidden-sector particles.
+  </p>
+
+  <h2>My contribution</h2>
+  <p>
+    My thesis extends this framework to smaller halos in the mass range 
+    <em>10<sup>13</sup> – 10<sup>14</sup> M⊙</em>. While the reference paper had reliable
+    lensing data for massive clusters, such measurements are not yet available for
+    smaller halos. Instead, I relied entirely on <strong>simulations</strong>.
+  </p>
+  <ul>
+    <li><strong>N-body simulations:</strong> I ran GADGET-2 in a 
+        <strong>500 Mpc box with 1024³ particles</strong>, compared to the 
+        1000 Mpc box used in the paper. This smaller volume allowed higher resolution,
+        ensuring that even smaller halos were well resolved. <a href="nbody.html"> Please refer to this link to know more about the results from N-body simulations</a></li>
+    <li><strong>Halo catalogs:</strong> I identified halos with masses 
+        between 10<sup>13</sup> and 10<sup>14</sup> M⊙ and extracted their parameters. Then I generated their profiles using <a href="https://bdiemer.bitbucket.io/colossus/halo_profile_dk14.html">the colossus library</a>. </li>
+    <li><strong>Gravothermal modeling:</strong> I evolved these halos forward in time
+        using the fluid approximation to track whether they remained cored or underwent 
+        core collapse.</li>
+  </ul>
+
+<h2>Gravothermal Evolution</h2>
+
+<p>
+Dark matter halos with self-interactions evolve through two characteristic phases. 
+Starting from an initially cuspy NFW profile, energy exchange between particles 
+gradually reshapes the inner halo. The figures below illustrate this process.
+</p>
+
+<h3>1. Core Formation</h3>
+<img src="Images/halo_evolution_1.png" alt="Early gravothermal evolution" style="max-width:100%; border-radius:8px; margin:20px 0;">
+<p>
+In the early stage, heat flows inward toward the center. This raises the core temperature, 
+causing surrounding shells to expand and flattening the central density profile. 
+The velocity dispersion within the core becomes nearly constant, signaling an isothermal state. 
+This stage produces a <strong>core-like structure</strong> in place of the initial cusp.
+</p>
+
+<h3>2. Core Contraction and Collapse</h3>
+<img src="Images/halo_evolution_2.png" alt="Late gravothermal evolution" style="max-width:100%; border-radius:8px; margin:20px 0;">
+<p>
+Once the core is isothermal, heat flows outward. The core steadily loses energy, 
+contracts, and grows denser. The evolution is initially <strong>self-similar</strong>: 
+density and temperature profiles scale in a predictable way while preserving their shape. 
+Eventually, the system enters the short mean free path regime, where conduction 
+is inefficient. The core then collapses rapidly, developing a steep, cusp-like profile. 
+This marks the onset of <strong>gravothermal core collapse</strong>.
+</p>
+
+<h2>Results: Dissipative Core Collapse</h2>
+
+<h3>Central Density Evolution</h3>
+<img src="Images/CDevo.png" 
+     alt="Central density evolution for different v_loss values" 
+     style="max-width:100%; border-radius:8px; margin:20px 0;">
+<p>
+A key parameter in dissipative self-interacting dark matter models is 
+<strong>v<sub>loss</sub></strong>, the velocity threshold above which 
+dark matter particle collisions can dissipate energy. 
+Collisions below this threshold behave elastically, while collisions above it 
+lose a fraction of kinetic energy, effectively cooling the halo.
+</p>
+<p>
+The plot shows the evolution of central density for different v<sub>loss</sub> values. 
+For small v<sub>loss</sub>, cooling is inefficient and the halo evolves almost like 
+the elastic case. As v<sub>loss</sub> increases, cooling becomes more effective and 
+core collapse accelerates. The fastest collapse occurs at 
+<strong>intermediate v<sub>loss</sub></strong>, where enough collisions occur to 
+dissipate energy efficiently while still involving a large fraction of particles. 
+At very high v<sub>loss</sub>, fewer collisions qualify as dissipative, so despite 
+larger energy loss per event, the overall collapse slows down again. 
+This explains the non-monotonic trend: energy exchange is most efficient at 
+intermediate v<sub>loss</sub>.
+</p>
+
+<h3>Collapse Time vs Concentration</h3>
+<img src="Images/CollapseTimes_Comparison_Log.png" 
+     alt="Collapse time vs concentration for halos with different vlow" 
+     style="max-width:100%; border-radius:8px; margin:20px 0;">
+<p>
+The second plot shows collapse time as a function of halo concentration, 
+with each point representing a halo from the N-body simulation. 
+The <strong>concentration</strong> parameter measures the ratio of a halo’s 
+virial radius to its scale radius. High-concentration halos are denser in their 
+inner regions, while low-concentration halos are more diffuse.
+</p>
+<p>
+The scatter demonstrates that collapse times depend strongly on both halo 
+concentration and v<sub>loss</sub>. At fixed v<sub>loss</sub>, 
+more concentrated halos collapse faster due to their higher initial densities. 
+As in the central density evolution plot, intermediate v<sub>loss</sub> values 
+lead to the shortest collapse times, while both very low and very high values 
+produce slower evolution. Together, these results highlight how dissipation 
+shapes halo evolution in a subtle, non-monotonic way.
+</p>
+
+  <p><a href="Webpage.html">← Back to main page</a></p>
+  <p class="note">*Based on Adhikari et al. (2024) and related works on SIDM simulations.</p>
+</body>
+</html>
+

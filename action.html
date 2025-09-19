@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Using Gala to Understand Action–Angle Variables</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+      background: #f5f5f5;
+      line-height: 1.6;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    img {
+      display: block;
+      margin: 20px auto;
+      max-width: 90%;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    a {
+      color: #007acc;
+    }
+  </style>
+</head>
+<body>
+  <h1>Using Gala to Understand Action–Angle Variables</h1>
+
+  <section id="intro">
+    <p>
+      Action–angle variables provide a powerful way to describe stellar orbits in smooth galactic potentials. 
+      Instead of tracking position and velocity directly, we transform the motion into conserved quantities 
+      (the <strong>actions</strong>) and their conjugate variables that happen to be linearly increasing quantities (the <strong>angles</strong>).
+    </p>
+    <ul>
+      <li><strong>Actions (J):</strong> Remain nearly constant for regular orbits, acting as orbit labels.</li>
+      <li><strong>Angles (θ):</strong> Increase linearly with time at rates given by the orbital frequencies (Ω).</li>
+    </ul>
+    <p>
+      This transformation simplifies the description of orbital dynamics, making it easier to analyze long-term 
+      evolution and detect resonances or chaotic behavior. I integrated stellar orbits in smooth potentials using <a href="https://github.com/adrn/gala" target="_blank">gala</a>.
+      Starting from a 3D phase-space point, I evolved the orbit in a flattened logarithmic potential,
+      fit an <em>isochrone</em> toy potential to the orbit, and computed action–angle variables.
+    </p>
+  </section>
+
+  <h2>Interpreting the Results</h2>
+
+  <section id="plots">
+    <h3>1. Frequencies (Ω) vs Time</h3>
+    <p>
+      In the plots, the frequencies appear with sharp spikes. These are not physical features but 
+      <em>numerical artifacts</em>. They occur because the angle variables "wrap around" whenever they exceed 
+      \(2\pi\). Each time an angle resets from \(2\pi\) back to 0, the derivative looks discontinuous, producing 
+      the spikes. Physically, the orbital frequencies are constant.
+    </p>
+    <img src="Images/freq_plot.png" alt="Frequency plot with spikes">
+
+    <h3>2. Angles (θ) vs Time</h3>
+    <p>
+      The angles vary linearly with time, but because they are periodic, once an angle reaches \(2\pi\) it resets 
+      to 0. This produces the sawtooth-like pattern in the plot. If we instead "unwrap" the angles (allowing them 
+      to increase beyond \(2\pi\)), the plot would be a straight line with constant slope.
+    </p>
+    <img src="Images/angle_plot.png" alt="Angle sawtooth plot">
+
+    <h3>3. Actions (J)</h3>
+    <p>
+      The actions remain nearly constant with only small oscillations, confirming that the orbit is regular and 
+      well-behaved in the chosen potential.
+    </p>
+    <img src="Images/action_lot.png" alt="Action variable plot">
+  </section>
+
+  <p><a href="index.html">← Back to main page</a></p>
+</body>
+</html>
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Understanding Action Variables</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 900px; margin: auto; padding: 20px; line-height: 1.6; background: #fafafa; }
+    h1, h2, h3 { color: #2c3e50; }
+    h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+    img { display: block; margin: 20px auto; max-width: 100%; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    ul { margin-left: 20px; }
+    a { color: #007acc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+
+<section id="action-angles">
+  <h2>Action–Angle Variables</h2>
+  <p>
+    In galactic dynamics, <strong>action–angle variables</strong> provide a powerful way to describe
+    orbits in integrable potentials. Instead of tracking a star’s changing position and velocity,
+    we transform to three conserved quantities (the <em>actions</em>, \(J_i\)) and their conjugate
+    variables (the <em>angles</em>, \(\theta_i\)). The actions remain nearly constant for regular orbits,
+    while the angles increase linearly with time at rates set by the orbital <em>frequencies</em> (\(\Omega_i\)).
+  </p>
+  <p>
+    This coordinate system has two major advantages: (1) actions serve as robust labels of orbits,
+    making them ideal for studying the structure of galaxies, and (2) the linear evolution of angles
+    simplifies long-term orbit analysis, resonance studies, and perturbation theory.
+  </p>
+  <p>
+    Below, I demonstrate this using an isochrone potential with the 
+    <a href="https://gala-astro.readthedocs.io/" target="_blank">gala</a> library. 
+    The figures illustrate how the angles wrap around uniformly, the actions remain constant, 
+    and the frequencies stay fixed — the hallmarks of integrable motion.
+  </p>
+</section>
+
+<section id="plots">
+  <h3>Visualizing Actions and Angles</h3>
+
+  <figure>
+    <img src="images/theta1_theta3.png" alt="Theta1 vs Theta3">
+    <figcaption>
+      Angle–Angle relation: \(\theta_1\) vs. \(\theta_3\).
+      The orbit traces parallel stripes, showing that the angles increase uniformly with time.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="images/J1_time.png" alt="Action J1 vs time">
+    <figcaption>
+      Action \(J_1\) remains constant over billions of years, confirming that actions are conserved quantities in an integrable potential.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="images/W1_time.png" alt="Frequency vs time">
+    <figcaption>
+      Orbital frequency \(\Omega_1\) stays nearly constant, while the corresponding angle grows linearly with time.
+    </figcaption>
+  </figure>
+</section>
+</body> -->
+
+<!-- <section id="orbit-actions">
+  <h2>Orbit integration & Action–Angle Analysis (with <em>gala</em>)</h2>
+
+  <p>
+    I integrated stellar orbits in smooth potentials using <a href="https://github.com/adrn/gala" target="_blank">gala</a>.
+    Starting from a 3D phase-space point, I evolved the orbit in a flattened logarithmic potential,
+    fit an <em>isochrone</em> toy potential to the orbit, and computed action–angle variables.
+    I then improved the toy-model actions using the O2GF correction (generating function) to better approximate the true actions.
+  </p>
+
+  <h3>What the figures show</h3>
+
+  <figure>
+    <img src="images/8b89248e-de71-4154-8ccd-739975854d84.png" alt="Angle-angle plot (theta1 vs theta3)" style="max-width:520px; width:100%; border-radius:6px;">
+    <figcaption>
+      <strong>Angle–Angle plot:</strong> the angle coordinates (\(\theta_1,\theta_3\)) modulo \(2\pi\).
+      Regular, torus-like orbits appear as diagonal/parallel stripes because angles increase nearly linearly with time.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img src="images/8b58b52e-0560-4726-b1c4-05e9e49ee88a.png" alt="Actions over time: toy actions and corrected actions" style="max-width:520px; width:100%; border-radius:6px;">
+    <figcaption>
+      <strong>Action time series:</strong> the blue curve is the toy-model action \(J_1\) (fitted isochrone); the orange curve is the improved action \(J_1'\) after applying O2GF corrections.
+      The corrected action is much closer to constant, demonstrating the effectiveness of the generating-function correction.
+    </figcaption>
+  </figure>
+
+  <h3>Short methodological note</h3>
+  <p>
+    <strong>Orbit integration:</strong> numerical integration of the Hamiltonian orbit in a smooth potential (here a flattened logarithmic potential).  
+    <strong>Toy potential fit:</strong> fit an isochrone potential to the integrated orbit to obtain analytic action–angle estimates.  
+    <strong>O2GF corrections:</strong> use the orbit-to-generating-function approach to compute Fourier coefficients that correct toy actions, producing a near-constant true action for regular orbits.
+  </p>
+
+  <h3>Reproducible snippet</h3>
+  <pre><code>
+// Minimal, cleaned example (units and imports assumed)
+import numpy as np
+import astropy.units as u
+import gala.dynamics as gd
+import gala.integrate as gi
+import gala.potential as gp
+from gala.units import galactic
+
+# 1) potential and initial condition
+pot = gp.LogarithmicPotential(v_c=150*u.km/u.s, q1=1., q2=1., q3=0.9, r_h=0, units=galactic)
+w0 = gd.PhaseSpacePosition(pos=[8,0,0.]*u.kpc, vel=[75,150,50.]*u.km/u.s)
+
+# 2) integrate orbit
+w = gp.Hamiltonian(pot).integrate_orbit(w0, dt=0.5, n_steps=10000)
+
+# 3) fit toy (isochrone) potential and compute toy actions/angles
+toy = gd.fit_isochrone(w)
+toy_actions, toy_angles, toy_freqs = toy.action_angle(w)
+
+# 4) O2GF correction (find generating function)
+result = gd.find_actions_o2gf(w, N_max=8, toy_potential=toy)
+# apply correction using selected n-vectors (example)
+nvecs = gd.generate_n_vectors(8, dx=1, dy=2, dz=2)
+act_correction = nvecs.T[...,None] * result['Sn'][0][None,:,None] * np.cos(nvecs.dot(toy_angles))[None]
+action_approx = toy_actions - 2*np.sum(act_correction, axis=1) * u.kpc**2/u.Myr
+
+# 5) plot toy_actions and action_approx to verify near-constancy
+  </code></pre>
+
+  <p style="font-size:0.95em;color:#444;">
+    If you want, I can add a downloadable Jupyter notebook for this example (with the exact parameters and plotting code),
+    or embed an interactive widget that steps through the integration — good for a portfolio page.
+  </p>
+</section>
+</body> -->

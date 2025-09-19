@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arduino Project: Whack-a-Mole Game</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; background: #f9f9f9; }
+    h1, h2 { color: #2c3e50; }
+    pre { background: #eee; padding: 10px; border-radius: 6px; overflow-x: auto; }
+    .section { margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+
+  <h1>Arduino Project: Whack-a-Mole Game</h1>
+  <p><strong>By:</strong> Dhruv Hukkeri</p>
+
+  <div class="section">
+    <h2>Introduction</h2>
+    <p>
+      Our project was a custom-built <em>Whack-a-Mole</em> arcade game using an Arduino UNO. 
+      Instead of plastic moles, we used paper cups with LEDs in front of them. 
+      When the LED lit up, the player had to hit the cup. A shock sensor detected the hit, 
+      and the Arduino registered it as a <strong>hit</strong> (if within the LED’s time window) 
+      or a <strong>miss</strong>. An OLED screen displayed the score live.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Working Principle</h2>
+    <p>
+      Each cup was fitted with a balloon surface attached to a <strong>shock sensor</strong>. 
+      When hit, the sensor sent a digital signal to the Arduino UNO. 
+      If the strike matched the LED’s active time, it was recorded as a hit, otherwise as a miss.
+    </p>
+    <p>
+      The game included multiple difficulty levels: <em>Noob</em>, <em>Intermediate</em>, 
+      <em>Pro</em>, and <em>God</em>, where the LED timing and pause duration decreased, 
+      making the game progressively harder.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Shock Sensor Module</h2>
+    <p>
+      A shock sensor has three pins: Ground, +5V, and Signal. During a shock event, 
+      the switch closes and sends a high signal to the Arduino, enabling detection of hits. 
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Circuit Diagram</h2>
+    <p><img src="Images/Schematic_Whack a mole_2022-11-19.png" 
+     alt="Schematic Circuit diagram for the Whack-a-Mole game" 
+     style="max-width:100%; border-radius:8px; margin:20px 0;">
+<p></p>
+  </div>
+
+  <div class="section">
+    <h2>Execution</h2>
+    <p>
+      The Arduino code randomly selected an LED to light up for 0.5 seconds. 
+      If the corresponding shock sensor detected a hit in time, a point was added. 
+      The game lasted for one minute, with score displayed on an OLED screen. 
+    </p>
+    <p>
+      Possible extensions included randomizing LED-on time and penalizing misses 
+      with negative points.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Sample Code Snippet</h2>
+    <pre><code>
+int red1In = 2; 
+int red1Out = 7; 
+int mole = -1;
+int hits = 0;
+
+void loop() {
+  mole = rand() % 4 + 1;  // Pick random mole
+  digitalWrite(red1Out, HIGH);
+  delay(500); // LED active
+  if (digitalRead(red1In) == LOW && mole == 1) {
+    hits++;
+    Serial.println("Hit!");
+  }
+}
+    </code></pre>
+    <p>(Only a shortened portion of the full code is shown here.)</p>
+  </div>
+
+<div class="section">
+  <h2>Full Project Report</h2>
+  <p>
+    You can read the complete report here: 
+    <a href="docs/Project Report (Dhruv Hukkeri)(20201065).docx" target="_blank">
+      Download Project Report (PDF)
+    </a>.
+  </p>
+</div>
+
+
+</body>
+</html>

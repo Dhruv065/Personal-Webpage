@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>N-body Simulations</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 900px; margin: auto; padding: 20px; line-height: 1.6; background: #fafafa; }
+    h1, h2, h3 { color: #2c3e50; }
+    h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+    img { display: block; margin: 20px auto; max-width: 100%; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    ul { margin-left: 20px; }
+    a { color: #007acc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Cosmological N-body Simulations</h1>
+
+  <h2>Introduction</h2>
+  <p>
+    Cosmological N-body simulations are the primary tool to study how structure 
+    forms in the universe under the influence of gravity. In these simulations, 
+    the dark matter distribution is represented by billions of particles, 
+    each tracing the motion of a small fraction of the cosmic mass. Starting 
+    from initial conditions set by the early universe — consistent with the 
+    cosmic microwave background and ΛCDM cosmology — the simulation evolves 
+    forward in time using Newton’s laws of motion and gravity.
+  </p>
+  <p>
+    As the universe expands, small fluctuations in density grow through 
+    gravitational instability, eventually forming the nonlinear cosmic web of 
+    filaments, sheets, and halos. Within this framework, galaxies and clusters 
+    reside inside dark matter halos, whose structure can be directly compared 
+    with observations through gravitational lensing, galaxy clustering, and 
+    rotation curves.
+  </p>
+  <p>
+    N-body simulations are especially valuable for testing alternative dark matter 
+    models. By adjusting interaction properties, box sizes, and resolution, we can 
+    explore how halo profiles and collapse timescales change across different 
+    physical scenarios. In my work, I use high-resolution simulations tailored to 
+    study intermediate-mass halos, bridging the gap between dwarf galaxies and 
+    massive clusters.
+  </p>
+
+<h2>Simulation Setup</h2>
+<ul>
+  <li><strong>Code:</strong> GADGET-2</li>
+  <li><strong>Box size:</strong> 500 Mpc/h</li>
+  <li><strong>Number of particles:</strong> 1024³</li>
+  <li><strong>Mass resolution:</strong> ~5 × 10⁹ M<sub>⊙</sub> per particle</li>
+  <li><strong>Halo finder:</strong> Rockstar</li>
+  <li><strong>Cosmology:</strong> Planck ΛCDM parameters
+    <ul>
+      <li>Ω<sub>m</sub> = 0.307115</li>
+      <li>Ω<sub>Λ</sub> = 0.692885</li>
+      <li>Ω<sub>b</sub> = 0.048206</li>
+      <li>h = 0.6777</li>
+    </ul>
+  </li>
+</ul>
+<p>
+  The smaller 500 Mpc box compared to typical 1000 Mpc runs provides higher 
+  mass resolution, ensuring halos of mass 10<sup>13</sup>–10<sup>14</sup> M<sub>⊙</sub> 
+  are resolved with tens of thousands of particles each.
+</p>
+
+
+<h2>Results</h2>
+
+<h3>Formation of the Cosmic Web</h3>
+<video controls style="max-width:100%; border-radius:8px; margin:20px 0;">
+  <source src="Videos/50Mpc_thick_256_500.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<p>
+The video above shows the large-scale formation of the cosmic web in the 500 Mpc/h box. 
+Initially small fluctuations grow under gravity into filaments, sheets, and nodes. 
+These structures host the halos where galaxies and clusters eventually form.
+</p>
+
+<h3>Effect of Self-Interaction Cross Section</h3>
+<img src="Images/stacked_M5_6e13_z0_allS.png" 
+     alt="Density profiles for different sigma values" 
+     style="max-width:100%; border-radius:8px; margin:20px 0;">
+<p>
+Here we compare stacked density profiles of halos for different self-interaction 
+cross-sections (σ). Increasing σ systematically reduces the central density, 
+demonstrating the coring effect of self-interactions. At larger radii, the 
+profiles remain nearly identical, showing that SIDM mainly alters the inner halo.
+From the 1000 halos in the mass range 10<sup>13</sup>–10<sup>14</sup> M<sub>⊙</sub>, 
+we compute stacked density profiles. This improves the signal-to-noise and allows 
+direct comparison with theoretical models and observational probes such as weak lensing. 
+The profiles reveal how SIDM-induced coring becomes more prominent at small radii, 
+while preserving the outer structure.
+</p>
+
+
+  <p><a href="index.html">← Back to main page</a></p>
+</body>
+</html>
